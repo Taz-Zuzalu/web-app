@@ -25,7 +25,7 @@ export default function MyEvents({
 
   useEffect(() => {
     if (userLoggedIn === null) router.push("/");
-    console.log("my events", userLoggedIn)
+
     setIsLoading(false)
   }, []);
 

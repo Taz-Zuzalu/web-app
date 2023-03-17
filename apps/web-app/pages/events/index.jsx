@@ -130,6 +130,7 @@ export default function Events() {
 
     useEffect(() => {
         // Set up scroll listening for scroll to top button
+        checkSession()
         const windowHeight = window.outerHeight
         window.addEventListener("scroll", () => {
             if (window.scrollY > windowHeight) {

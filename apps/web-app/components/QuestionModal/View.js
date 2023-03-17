@@ -55,6 +55,26 @@ export default function QuestionModalView({
         setRerender(!rerender)
     }
 
+    function handleDateChange(event) {
+
+
+      const today = new Date();
+      const maxDate = new Date('2023-03-25');
+      console.log(newEvent.startDate, maxDate, event)
+      if (event.startDate < today) {
+        // eslint-disable-next-line no-undef
+        alert('Please choose a start date that is after today'); // Display error message
+      } else if (event.startDate < maxDate) {
+        // eslint-disable-next-line no-undef
+        alert('Please choose a start date on or before March 25th'); // Display error message
+      } else if (event.endDate < newEvent.startDate) {
+        // eslint-disable-next-line no-undef
+        alert('The end date cannot be before the start date'); // Display error message
+      } else {
+        setNewEvent(event)
+      }
+    }
+
     useEffect(() => {
         ;(async () => {
             try {
@@ -145,7 +165,7 @@ export default function QuestionModalView({
                                                 <DatePicker
                                                     className="border border-2 p-1 w-full"
                                                     selected={newEvent.startDate}
-                                                    onChange={(date) => setNewEvent({ ...newEvent, startDate: date })}
+                                                    onChange={(date) => handleDateChange({ ...newEvent, startDate: date })}
                                                 />
                                             </div>
                                             <div className="flex flex-col w-full">

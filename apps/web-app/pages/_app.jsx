@@ -24,8 +24,10 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    checkSession();
-    console.log(userLoggedIn)
+    async () => {
+      checkSession();
+    }
+
   }, []);
 
   return(
