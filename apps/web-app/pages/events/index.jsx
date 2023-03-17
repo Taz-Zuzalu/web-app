@@ -12,10 +12,15 @@ import BackTAZ from "../../components/ArrowNavigators/BackTAZ"
 import Footer from "../../components/Footer"
 import Calendar from "../../components/Calendar"
 import { pretixCreateEvent, pretixCreateItem } from "../../components/PretixFunction"
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co"
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default function Events() {
     const [questionModalIsOpen, setQuestionModalIsOpen] = useState(false)
     const [showTopBtn, setShowTopBtn] = useState(false)
+    const [userLoggedIn, setUserLoggedIn] = useState(null)
     const [newEvent, setNewEvent] = useState({
         name: "",
         organizers: [],
@@ -36,6 +41,12 @@ export default function Events() {
         } catch (error) {
             console.log("fetching events failed", error)
         }
+    }
+
+    async function checkSession() {
+      const user = await supabase.auth.getSession();
+      console.log("user", user);
+      user.data.session ? setUserLoggedIn(user.data) : setUserLoggedIn(null);
     }
 
     useEffect(() => {
@@ -147,8 +158,7 @@ export default function Events() {
             <div className="fixed top-[70%] left-[2%]">
                 <RedCircle />
             </div>
-
-            <div className="fixed bottom-[15%] right-2 z-20 flex justify-end">
+            {userLoggedIn ? <div className="fixed bottom-[15%] right-2 z-20 flex justify-end">
                 <button
                     type="button"
                     className="rounded-full bg-brand-yellow ring-2 ring-brand-black py-3 px-4 drop-shadow text-brand-button font-medium text-brand-black hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-opacity-25"
@@ -156,7 +166,8 @@ export default function Events() {
                 >
                     Add an event
                 </button>
-            </div>
+            </div>: ''}
+
             {showTopBtn && (
                 <div className="fixed bottom-[15%] left-2 z-20 flex justify-end">
                     <button onClick={goToTop}>

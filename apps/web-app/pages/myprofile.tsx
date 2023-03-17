@@ -1,10 +1,12 @@
-import React from "react"
-
+import React, {useEffect, useState} from "react"
+import { useRouter } from "next/router"
 import { GetServerSideProps } from "next"
-
+import { createClient } from '@supabase/supabase-js'
 import MyProfileComponent from "../components/MyProfile"
-
 import { FavoritedEventsDTO, ParticipantsDTO, UserDTO } from "../types"
+const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co"
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey as string)
 
 type Props = {
     pastEvents: ParticipantsDTO[]
@@ -14,7 +16,22 @@ type Props = {
 }
 
 export default function MyProfile({ pastEvents, attendingEvents, userEventsFavorited, userInfo }: Props) {
-    return (
+  const [UserLoggedIn, setUserLoggedIn] = useState<any>(null)
+  const router = useRouter();
+
+  async function checkSession() {
+    const user = await supabase.auth.getSession();
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    user.data.session ? setUserLoggedIn(user.data) : setUserLoggedIn(null);
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    (async () => {checkSession()})()
+
+    if (!UserLoggedIn) router.push("/");
+  }, [UserLoggedIn]);
+  return (
         <MyProfileComponent
             pastEvents={pastEvents}
             attendingEvents={attendingEvents}

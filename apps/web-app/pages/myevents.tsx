@@ -1,65 +1,90 @@
-import { GetServerSideProps } from "next"
-
-import { FavoritedEventsDTO, ParticipantsDTO, UserDTO } from "../types"
-
-import MyEventsComponent from "../components/MyEvent"
+import React, { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { createClient } from "@supabase/supabase-js";
+import { FavoritedEventsDTO, ParticipantsDTO, UserDTO } from "../types";
+import MyEventsComponent from "../components/MyEvent";
 
 type Props = {
-    pastEvents: ParticipantsDTO[]
-    attendingEvents: ParticipantsDTO[]
-    favoritesEvents: FavoritedEventsDTO[]
-    user: UserDTO | undefined
-}
+  pastEvents: ParticipantsDTO[];
+  attendingEvents: ParticipantsDTO[];
+  favoritesEvents: FavoritedEventsDTO[];
+  user: UserDTO | undefined;
+  userLoggedIn: any;
+};
 
-export default function MyEvents({ pastEvents, attendingEvents, favoritesEvents, user }: Props) {
+export default function MyEvents({
+  pastEvents,
+  attendingEvents,
+  favoritesEvents,
+  user,
+  userLoggedIn
+}: Props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userLoggedIn === null) router.push("/");
+    console.log("my events", userLoggedIn)
+    setIsLoading(false)
+  }, []);
+
+  if (!isLoading) {
     return (
-        <MyEventsComponent
-            pastEvents={pastEvents}
-            attendingEvents={attendingEvents}
-            favoritesEvents={favoritesEvents}
-            user={user}
-        />
-    )
+      <MyEventsComponent
+        pastEvents={pastEvents}
+        attendingEvents={attendingEvents}
+        favoritesEvents={favoritesEvents}
+        user={user}
+      />
+    );
+  }
+
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-    try {
-        const url = process.env.URL_TO_FETCH
-        const usersResult = await fetch(`${url}/api/fetchUsers`)
-        const participantsResult = await fetch(`${url}/api/fetchParticipants`)
-        const usersFavoriteEventsResult = await fetch(`${url}/api/fetchFavoritedEvents`)
+  try {
 
-        const usersData: UserDTO[] = await usersResult.json()
-        const participantsData: ParticipantsDTO[] = await participantsResult.json()
-        const usersFavoriteData: FavoritedEventsDTO[] = await usersFavoriteEventsResult.json()
+    const url = process.env.URL_TO_FETCH;
+    const usersResult = await fetch(`${url}/api/fetchUsers`);
+    const participantsResult = await fetch(`${url}/api/fetchParticipants`);
+    const usersFavoriteEventsResult = await fetch(
+      `${url}/api/fetchFavoritedEvents`
+    );
 
-        // mocked user for now (fetching user 1 from db)
-        // since we implement user authentication in the server side, we need to fetch user dinamically
-        const userEvents = participantsData.filter((item) => item.user_id === 1)
-        const favoritesEvents = usersFavoriteData.filter((item) => item.user_id === 1)
-        const pastEvents = userEvents.filter((item) => {
-            const todayDate = new Date().getTime()
-            const eventDate = new Date(item.events.endDate).getTime()
-            if (todayDate > eventDate) {
-                return item
-            }
-        })
-        const attendingEvents = userEvents.filter((item) => {
-            const todayDate = new Date().getTime()
-            const eventDate = new Date(item.events.endDate).getTime()
-            if (todayDate < eventDate) {
-                return item
-            }
-        })
-        const userInfo = usersData.find((item) => item.id === 1)
+    const usersData: UserDTO[] = await usersResult.json();
+    const participantsData: ParticipantsDTO[] = await participantsResult.json();
+    const usersFavoriteData: FavoritedEventsDTO[] = await usersFavoriteEventsResult.json();
 
-        return {
-            props: { pastEvents, attendingEvents, favoritesEvents, user: userInfo }
-        }
-    } catch (error) {
-        res.statusCode = 404
-        return {
-            props: {}
-        }
-    }
-}
+    // mocked user for now (fetching user 1 from db)
+    // since we implement user authentication in the server side, we need to fetch user dinamically
+    const userEvents = participantsData.filter((item) => item.user_id === 1);
+    const favoritesEvents = usersFavoriteData.filter(
+      (item) => item.user_id === 1
+    );
+    const pastEvents = userEvents.filter((item) => {
+      const todayDate = new Date().getTime();
+      const eventDate = new Date(item.events.endDate).getTime();
+      if (todayDate > eventDate) {
+        return item;
+      }
+    });
+    const attendingEvents = userEvents.filter((item) => {
+      const todayDate = new Date().getTime();
+      const eventDate = new Date(item.events.endDate).getTime();
+      if (todayDate < eventDate) {
+        return item;
+      }
+    });
+    const userInfo = usersData.find((item) => item.id === 1);
+
+    return {
+      props: { pastEvents, attendingEvents, favoritesEvents, user: userInfo },
+    };
+  } catch (error) {
+    res.statusCode = 404;
+    return {
+      props: {},
+    };
+  }
+};
