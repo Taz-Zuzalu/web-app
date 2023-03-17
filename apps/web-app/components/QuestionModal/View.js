@@ -60,7 +60,7 @@ export default function QuestionModalView({
 
       const today = new Date();
       const maxDate = new Date('2023-03-25');
-      console.log(newEvent.startDate, maxDate, event)
+
       if (event.startDate < today) {
         // eslint-disable-next-line no-undef
         alert('Please choose a start date that is after today'); // Display error message
@@ -188,7 +188,7 @@ export default function QuestionModalView({
                                                 <DatePicker
                                                     className="border border-2 p-1 w-full"
                                                     selected={newEvent.endDate}
-                                                    onChange={(date) => setNewEvent({ ...newEvent, endDate: date })}
+                                                    onChange={(date) => handleDateChange({ ...newEvent, endDate: date })}
                                                 />
                                             </div>
                                             <div className="flex flex-col w-full">
