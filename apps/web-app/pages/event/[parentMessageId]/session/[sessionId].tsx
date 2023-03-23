@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res, query }) => 
     try {
         const url = process.env.URL_TO_FETCH
 
-        const response = await fetch(`${url}/api/fetchSession/${query.sessionId}?userId=${LOGGED_IN_USER_ID}`)
+        const response = await fetch(`${url}/api/fetchSession/${query.sessionId}?userId=${1}`)
         const session = await response.json()
 
         return {

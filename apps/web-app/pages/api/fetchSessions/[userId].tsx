@@ -1,23 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@supabase/supabase-js"
+
+const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co"
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey as string)
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const supabase = createServerSupabaseClient({ req, res });
+
 
   // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // const {
+  //   data: { session },
+  // } = await supabase.auth.getSession();
 
-  if (!session)
-    return res.status(401).json({
-      error: "not_authenticated",
-      description:
-        "The user does not have an active session or is not authenticated",
-    });
+  // if (!session)
+  //   return res.status(401).json({
+  //     error: "not_authenticated",
+  //     description:
+  //       "The user does not have an active session or is not authenticated",
+  //   });
 
   try {
     const response = await supabase

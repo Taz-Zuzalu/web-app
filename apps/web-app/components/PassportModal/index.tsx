@@ -109,22 +109,15 @@ const PassportModal = ({ openPassportModal, setOpenPassportModal }: Props) => {
                         onClick={handleSubmit}
                         className="bg-zulalu-yellow text-center rounded-[58px] h-[45px] w-5/6 border border-[#ffffff4d]"
                       >
-                        Verify Passport
+                        Email Sign-in
                       </button>
                     </form>
-                    {/* <input
-                      className="bg-[#19473F] text-white text-center rounded-[58px] h-[45px] w-5/6 border border-[#ffffff4d] focus:outline-none focus:ring-0"
-                      placeholder="email address"
-                    />
-                    <input
-                      className="bg-[#19473F] text-white text-center rounded-[58px] h-[45px] w-5/6 border border-[#ffffff4d] focus:outline-none focus:ring-0"
-                      placeholder="password"
-                    /> */}
-
-                    {/* <button className="bg-zulalu-yellow text-center rounded-[58px] h-[45px] w-5/6 border border-[#ffffff4d]">
-                      Generate Pass
-                    </button> */}
-
+                    <button
+                        onClick={zuzaluMembershipProof}
+                        className="bg-zulalu-yellow text-center rounded-[58px] h-[45px] w-5/6 border border-[#ffffff4d]"
+                      >
+                        Verify Passport
+                      </button>
                   </div>
                   <div
                     onClick={() => setOpenPassportModal(false)}

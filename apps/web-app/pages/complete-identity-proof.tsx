@@ -7,7 +7,7 @@ import axios from "axios"
 // NEED TO INPUT THE CLIENT SUPABASE INSTANCE
 
 async function setAuthStatus(proof: any) {
-  console.log("Did the proof make it", proof)
+
   if (proof) {
     try {
       console.log("log my proof", proof)

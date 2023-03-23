@@ -12,12 +12,12 @@ export default async function handler(
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session)
-    return res.status(401).json({
-      error: "not_authenticated",
-      description:
-        "The user does not have an active session or is not authenticated",
-    });
+  // if (!session)
+  //   return res.status(401).json({
+  //     error: "not_authenticated",
+  //     description:
+  //       "The user does not have an active session or is not authenticated",
+  //   });
 
   try {
     const userId =
