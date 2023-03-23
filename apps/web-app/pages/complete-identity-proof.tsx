@@ -4,10 +4,7 @@ import {
   useSemaphorePassportProof
 } from "@pcd/passport-interface";
 import axios from "axios"
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey as string);
+// NEED TO INPUT THE CLIENT SUPABASE INSTANCE
 
 async function setAuthStatus(proof: any) {
   console.log("Did the proof make it", proof)
@@ -16,7 +13,7 @@ async function setAuthStatus(proof: any) {
       console.log("log my proof", proof)
       const response = await axios({
         method: 'post',
-        url: 'https://bed8-2806-107e-13-6229-d584-c0de-219e-7dcd.ngrok.io/api/passport-user-login/',
+        url: 'https://83df-189-203-105-58.ngrok.io/api/passport-user-login/',
         data: proof,
         headers: {
           'Content-Type': 'application/json'
@@ -25,7 +22,6 @@ async function setAuthStatus(proof: any) {
 
       console.log(response);
 
-      localStorage.setItem('id', response.data.data[0].id);
       return response.data;
     } catch (error) {
       console.error(error);
