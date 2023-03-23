@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs"
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSession = () => {
   const [sessionToken, setSessionToken] = useState(null);
+  const supabase = createBrowserSupabaseClient()
 
   useEffect(() => {
     (async () => {

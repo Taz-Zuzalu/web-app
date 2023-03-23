@@ -2,10 +2,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import ExperiencesListComponent from "./View";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs"
+
+const supabase = createBrowserSupabaseClient()
 
 const ExperiencesList = () => {
   const [identityUrl, setIdentityUrl] = useState("");

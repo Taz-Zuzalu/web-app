@@ -1,13 +1,11 @@
 import NextImage from "next/image"
 import NextLink from "next/link"
-import { createClient } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { usePassportModalContext } from "../../context/PassportModalContext"
 import PassportModal from "../PassportModal"
 
-const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co"
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey as string)
+const supabase = createBrowserSupabaseClient()
 
 const Header = () => {
     const { openPassportModal, setOpenPassportModal } = usePassportModalContext()

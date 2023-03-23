@@ -1,11 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "@supabase/supabase-js";
 import { useSemaphorePassportProof } from "@pcd/passport-interface";
 import { sha256 } from "js-sha256";
 import { verifyProof } from "@semaphore-protocol/proof";
 import axios from 'axios';
-
-
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 export default async function handler(

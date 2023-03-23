@@ -20,13 +20,14 @@ export default async function handler(
     });
 
   try {
-    const { id } = req.body;
     const response = await supabase
-      .from("favorited_events")
-      .delete()
-      .eq("id", id);
+      .from("sessions")
+      .select("*, participants (*), favoritedSessions:favorited_sessions (*)")
 
-    res.status(200).send(response.data);
+      .eq("participants.user_id", req.query.userId)
+      .eq("favoritedSessions.user_id", req.query.userId);
+    if (response.error === null) res.status(200).send(response.data);
+    else res.status(response.status).send(response.error);
   } catch (err) {
     console.log("error: ", err);
     res.status(500).json({ statusCode: 500, message: err.message });
