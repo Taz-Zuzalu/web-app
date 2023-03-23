@@ -2,66 +2,43 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { useSemaphorePassportProof } from "@pcd/passport-interface";
 import { sha256 } from "js-sha256";
+import { verifyProof } from "@semaphore-protocol/proof";
 
-const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey as string, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-    detectSessionInUrl: false
-  }
-});
+
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("request body", req.body);
+  const supabase = createServerSupabaseClient({ req, res });
+
   const signInWithSemaphoreProof = async (proof: any) => {
     // IMPORTANT!!!! User Email must be changed
     // Validate Proof of user before interacting with DB
-    const email = "anothertest3@test.com";
-    const password = "123456";
-    try {
-      const findUser = await supabase
-        .from("users")
-        .select("id")
-        .eq("email", email);
+    const proofValid = await verifyProof(proof.proof, proof.claim.group.depth);
 
-      if (findUser!.data!.length !== 0) {
+    if (proofValid) {
+      const email = "anothertest3@test.com";
+      const password = process.env.SINGLE_KEY_LOGIN!;
+      try {
+        // Get Email from endpoint
         const signIn = await supabase.auth.signInWithPassword({
           email,
           password,
         });
-        console.log("Signed in:", signIn);
-        res.status(200).json(findUser);
+
+        if (signIn.error) {
+          const signUp = await supabase.auth.signUp({ email, password });
+          res.status(200).json(signUp.data.user);
+        } else {
+          res.status(200).json(signIn.data.user);
+        }
+      } catch (error) {
+        console.log(error);
       }
-
-      if (findUser!.data!.length === 0) {
-        const createUser = await supabase.from("users").insert({
-          email,
-          userName: "Test name",
-          password,
-          uuid: 123,
-        });
-
-        const signUpResponse = await supabase.auth.signUp({
-          email,
-          password,
-        });
-
-        const findUserAfterCreate = await supabase
-        .from("users")
-        .select("id")
-        .eq("email", email);
-
-
-        console.log(createUser);
-        res.status(200).json(findUserAfterCreate);
-      }
-    } catch (error) {
-      console.log(error);
+    } else {
+      res.status(403).json("Proof not valid");
     }
   };
 
