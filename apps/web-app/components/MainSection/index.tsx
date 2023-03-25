@@ -9,7 +9,7 @@ type Props = {
     events: EventsDTO[]
 }
 const MainSection = ({ events }: Props) => {
-    const [isUserConnected, setIsUserConnected] = useState(true)
+    const [isUserConnected, setIsUserConnected] = useState(false)
 
     const router = useRouter()
     let eventsArr = events
