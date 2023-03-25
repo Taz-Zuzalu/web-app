@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import NextImage from "next/image"
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
@@ -6,6 +6,7 @@ import BaseTemplate from "../Base"
 import Sessions from "../../components/Sessions/CalendarPageSessions"
 import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 import CalendarSessionModal from "../../components/CalendarSessionModal"
+import StyledDatePicker from "../../components/StyledDatePicker"
 import { EventsDTO, SessionsDTO } from "../../types"
 
 const supabase = createBrowserSupabaseClient()
@@ -21,8 +22,79 @@ const MyProfilePage = ({ events, sessions }: Props) => {
     const [selectedOpt, setSelectedOpt] = useState<string[]>([])
     const [tickets, setTickets] = useState<any[]>([])
     const [openAddSessionModal, setOpenAddSessionModal] = useState(false)
+    const [filteredSessions, setFilteredSessions] = useState<SessionsDTO[]>(sessions)
 
     const isOrganizer = userRole === "resident"
+
+    /* Begin DatePicker code */
+    const [openDatePicker, setOpenDatePicker] = useState(false)
+    const [datePickerDescription, setDatePickerDescription] = useState("FULL PROGRAM")
+    const [datePickerStartDate, setDatePickerStartDate] = useState<Date | null>(null)
+    const [datePickerEndDate, setDatePickerEndDate] = useState<Date | null>(null)
+    const datePickerWrapperRef = useRef(null)
+
+    const toggleDatePicker = () => {
+        setOpenDatePicker(!openDatePicker)
+    }
+
+    const handleDateSelection = (selectedDates: [Date | null, Date | null]) => {
+        // Filter sessions
+        console.log("selectedDates: ", selectedDates)
+        const [start, end] = selectedDates
+        setDatePickerStartDate(start)
+        setDatePickerEndDate(end)
+        const filtered = sessions.filter((session) => {
+            const sessionDate = new Date(session.startDate)
+            sessionDate.setHours(0, 0, 0, 0) // Remove time part for date comparison
+            const endOfDay = end ? new Date(end) : null
+            if (endOfDay) {
+                endOfDay.setHours(23, 59, 59, 999) // Set end date to end of day
+            }
+            return (start === null || start <= sessionDate) && (endOfDay === null || sessionDate <= endOfDay)
+        })
+        setFilteredSessions(filtered)
+    }
+
+    // Update filter header description
+    // (done in useEffect because start and end date must be done updating first)
+    useEffect(() => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        if (datePickerStartDate?.getTime() === today.getTime() && datePickerEndDate?.getTime() === today.getTime()) {
+            setDatePickerDescription("TODAY")
+        } else if (datePickerStartDate?.getTime() === today.getTime()) {
+            setDatePickerDescription("TODAY ONWARD")
+        } else if (datePickerStartDate && datePickerEndDate === null) {
+            setDatePickerDescription(`${moment(datePickerStartDate).format("MMMM D")} ONWARD`)
+        } else if (
+            datePickerStartDate &&
+            datePickerEndDate &&
+            datePickerStartDate.getTime() === datePickerEndDate.getTime()
+        ) {
+            setDatePickerDescription(moment(datePickerStartDate).format("dddd MMMM D"))
+        } else if (datePickerStartDate && datePickerEndDate) {
+            setDatePickerDescription(
+                `${moment(datePickerStartDate).format("MMMM D")} - ${moment(datePickerEndDate).format("D")}`
+            )
+        }
+    }, [datePickerStartDate, datePickerEndDate])
+
+    const handleDatePickerClickOutside = (e: MouseEvent) => {
+        const { current: wrap } = datePickerWrapperRef as { current: HTMLElement | null }
+
+        if (wrap && !wrap.contains(e.target as Node)) {
+            setOpenDatePicker(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleDatePickerClickOutside)
+
+        return () => {
+            document.removeEventListener("mousedown", handleDatePickerClickOutside)
+        }
+    }, [])
+    /* End DatePicker code */
 
     async function getUserTickets() {
         try {
@@ -46,20 +118,25 @@ const MyProfilePage = ({ events, sessions }: Props) => {
         }
     }, [userSessions])
 
+    const filterByOptions = () => {
+        const updatedFilteredSessions =
+            selectedOpt.length > 0
+                ? sortByDate.filter((item) => selectedOpt.includes(item.events.name.replace("\n", "")))
+                : sortByDate
+        setFilteredSessions(updatedFilteredSessions)
+    }
+
     const handleOptionChange = (i: string) => {
         if (selectedOpt.includes(i)) {
             setSelectedOpt(selectedOpt.filter((item) => item !== i))
         } else {
             setSelectedOpt([...selectedOpt, i])
         }
+        filterByOptions()
     }
 
     const sortByDate = userSessions.sort((a, b) => (new Date(a.startDate) as any) - (new Date(b.startDate) as any))
 
-    const filteredSessions =
-        selectedOpt.length > 0
-            ? sortByDate.filter((item) => selectedOpt.includes(item.events.name.replace("\n", "")))
-            : sortByDate
     return (
         <BaseTemplate>
             {/* <div className="flex flex-col bg-[#EEEEF0] px-6 sm:px-12 md:px-[24px] py-6 sm:py-12 md:py-[24px] gap-4 sm:gap-8 md:gap-[16px]"> */}
