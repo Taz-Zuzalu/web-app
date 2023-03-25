@@ -3,6 +3,11 @@ import DropDownArrow from "../ArrowNavigators/DropDownArrow"
 import CollapseArrow from "../ArrowNavigators/CollapseArrow"
 
 const AccordionUI = ({ title, children, Id, Index, setIndex }) => {
+    // If the question ID is between 1 and 7, show on UI a title saying Logistics
+    // If the question ID is between 8 and 10, show on UI a title saying Participation
+    // If the question ID is between 11 and 12, show on UI a title saying Health
+    // If the question ID is between 13 and 15, show on UI a title saying Living at Zuzalu
+
     const handleSetIndex = (Id) => (Index === Id ? setIndex(0) : setIndex(Id))
 
     return (
