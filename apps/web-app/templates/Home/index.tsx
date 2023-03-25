@@ -1,9 +1,15 @@
+// templates/Home/index.tsx
 import Head from "next/head"
 import MainSection from "../../components/MainSection"
 
 import BaseTemplate from "../Base"
+import { EventsDTO } from "../../types"
 
-const HomeTemplate = () => (
+type Props = {
+    events: EventsDTO[]
+}
+
+const HomeTemplate = ({ events }: Props) => (
     <BaseTemplate>
         <Head>
             <title>Home</title>
@@ -11,7 +17,7 @@ const HomeTemplate = () => (
         </Head>
 
         <div className="flex flex-col w-full z-10">
-            <MainSection />
+            <MainSection events={events} />
         </div>
     </BaseTemplate>
 )
