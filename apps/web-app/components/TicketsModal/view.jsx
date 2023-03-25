@@ -51,7 +51,7 @@ export default function TicketsModalView(props) {
                   </div>
                   <Dialog.Title
                     as="h3"
-                    className="text-lg left-10 pb-1 mx-4 font-medium  text-gray-900 border-b-2 border-brand-blue mt-2 align-self: center"
+                    className="text-lg left-10 pb-1 mx-4 font-medium leading-6 text-gray-900 border-b-2 border-brand-blue mt-2 align-self: center"
                   >
                     Available Tickets
                   </Dialog.Title>
