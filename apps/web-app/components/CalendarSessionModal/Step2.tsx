@@ -253,6 +253,7 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                 pauseOnHover
                 theme="light"
             />
+
             <div className="flex flex-col gap-1 my-1 w-full">
                 <label htmlFor="name" className="font-[600]">
                     Title*
