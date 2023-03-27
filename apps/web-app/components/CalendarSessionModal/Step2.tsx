@@ -70,6 +70,19 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
     const wraperRef = useRef(null)
 
     const handleAddTeamMember = () => {
+        if (teamMember.name.trim() === "") {
+            return toast.error("Please enter a name for the team member.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            })
+        }
+
         setNewSession({ ...newSession, team_members: [...newSession.team_members, teamMember] })
         setTeamMember({ name: "", role: "Speaker" })
         setDisplay(false)
@@ -81,6 +94,19 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
     }
 
     const handleAddTag = () => {
+        if (tag.trim() === "") {
+            return toast.error("Please enter a tag.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            })
+        }
+
         setNewSession({ ...newSession, tags: [...newSession.tags, tag] })
         setTag("")
     }
@@ -179,14 +205,27 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
     }, [newSession])
 
     const handleNextStep = () => {
-        if (
-            newSession.name.length === 0 ||
-            newSession.description.length === 0 ||
-            newSession.location === "" ||
-            newSession.team_members.length === 0 ||
-            newSession.startTime === "00"
-        ) {
-            return toast.error("Please fill all inputs required.", {
+        let emptyFields = []
+        if (newSession.name.length === 0) {
+            emptyFields.push("name")
+        }
+        if (newSession.description.length === 0) {
+            emptyFields.push("description")
+        }
+        if (newSession.location === "") {
+            emptyFields.push("location")
+        }
+        if (newSession.team_members.length === 0) {
+            emptyFields.push("team members")
+        }
+        if (newSession.startTime === "00") {
+            emptyFields.push("start time")
+        }
+        if (emptyFields.length > 0) {
+            const errorMessage = `Please fill all inputs required. The following fields are empty: ${emptyFields.join(
+                ", "
+            )}.`
+            return toast.error(errorMessage, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -197,9 +236,9 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                 theme: "light"
             })
         }
-
         setSteps(3)
     }
+
     return (
         <div className="flex flex-col w-full">
             <ToastContainer
