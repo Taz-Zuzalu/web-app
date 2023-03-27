@@ -80,8 +80,8 @@ const Events = ({ events }: Props) => {
                                     .utc(event.startDate)
                                     .format("YYYY")}`}</h1>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
                 <div className="grid md:grid-rows-1 md:grid-cols-4 grid-cols-1 gap-5">
                     {secondHalf.map((event, index) => {
