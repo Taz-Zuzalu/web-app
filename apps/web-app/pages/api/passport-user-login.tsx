@@ -19,7 +19,7 @@ export default async function handler(
     const proofValid = await verifyProof(proof.proof.proof, proof.claim.group.depth);
 
     if (proofValid) {
-      const userDetailsRes = await axios.get(`https://api.pcd-passport.com/zuzalu/participant/${1610c922-e9bb-4b1b-b958-b256c9de9193}`);
+      const userDetailsRes = await axios.get(`https://api.pcd-passport.com/zuzalu/participant/${UUID}`);
       const { uuid, commitment, email, name, role, residence, order_id } = userDetailsRes.data
 
       const email = "danilowhk@gmail.com";
