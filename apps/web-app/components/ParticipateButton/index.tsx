@@ -3,16 +3,17 @@ import NextImage from "next/image"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import axios from "axios"
-import { SessionsDTO } from "../../types"
+import { EventsDTO, SessionsDTO } from "../../types"
 import BuyTicketModal from "../BuyTicketModal"
 import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 
 type Props = {
+    event: EventsDTO
     session: SessionsDTO
     isTallButton: boolean
 }
 
-const ParticipateButton = ({ session, isTallButton }: Props) => {
+const ParticipateButton = ({ event, session, isTallButton }: Props) => {
     const [openBuyTicketModal, setOpenBuyTicketModal] = useState(false)
 
     const { userInfo } = useUserAuthenticationContext()
@@ -81,6 +82,7 @@ const ParticipateButton = ({ session, isTallButton }: Props) => {
     return (
         <>
             {userInfo &&
+                event.id !== 90 &&
                 (session.participants.length > 0 ? (
                     <button
                         className={`flex gap-2 md:w-auto w-full justify-center items-center bg-white border border-primary text-zulalu-primary font-[600] py-[${

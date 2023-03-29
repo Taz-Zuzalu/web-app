@@ -45,7 +45,7 @@ const Sessions = ({ event, sessions }: Props) => {
                                     </div>
                                 </div>
                                 <div className="hidden md:flex">
-                                    <ParticipateButton session={item} isTallButton={false} />
+                                    <ParticipateButton event={event} session={item} isTallButton={false} />
                                 </div>
                             </div>
                             <div className="w-full flex flex-col md:flex-row gap-[32px] justify-between md:items-center items-start">
@@ -152,7 +152,7 @@ const Sessions = ({ event, sessions }: Props) => {
                                     ))}
                                 </div>
                                 <div className="flex md:hidden w-full">
-                                    <ParticipateButton session={item} isTallButton={false} />
+                                    <ParticipateButton event={event} session={item} isTallButton={false} />
                                 </div>
                             </div>
                         </div>

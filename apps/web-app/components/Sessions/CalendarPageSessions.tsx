@@ -4,18 +4,19 @@ import { useRouter } from "next/router"
 import axios from "axios"
 import { toast } from "react-toastify"
 import moment from "moment"
-import { SessionsDTO } from "../../types"
+import { EventsDTO, SessionsDTO } from "../../types"
 import FavoriteButton from "../FavoriteButton"
 
 import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 import ParticipateButton from "../ParticipateButton"
 
 type Props = {
+    event: EventsDTO
     sessions: SessionsDTO[]
     showStartDate?: boolean
 }
 
-const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
+const CalendarPageSessions = ({ event, sessions, showStartDate = false }: Props) => {
     const { userInfo, isAuth } = useUserAuthenticationContext()
     // const [openBuyTicketModal, setOpenBuyTicketModal] = useState(false)
     // const [currentSubEventParams, setCurrentSubEventParams] = useState<any>({
@@ -124,7 +125,7 @@ const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
                                     </div>
                                 </div>
                                 <div className="hidden md:flex">
-                                    <ParticipateButton session={item} isTallButton={false} />
+                                    <ParticipateButton event={event} session={item} isTallButton={false} />
                                 </div>
                             </div>
                             <div className="w-full flex flex-col md:flex-row gap-[32px] justify-between md:items-center items-start">
@@ -232,7 +233,7 @@ const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
                                     ))}
                                 </div>
                                 <div className="flex md:hidden w-full">
-                                    <ParticipateButton session={item} isTallButton={false} />
+                                    <ParticipateButton event={event} session={item} isTallButton={false} />
                                 </div>
                             </div>
                         </div>
