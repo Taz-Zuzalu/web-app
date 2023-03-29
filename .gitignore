@@ -94,4 +94,7 @@ notes/
 
 ./apps/web-app/pages/signup-test.jsx
 ./apps/web-app/pages/deleteUsers.jsx
+
 ./yarn/install-state.gz
+.yarn/install-state.gz
+install-state.gz
