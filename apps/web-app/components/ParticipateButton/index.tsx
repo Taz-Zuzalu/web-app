@@ -52,7 +52,8 @@ const ParticipateButton = ({ event, session, isTallButton }: Props) => {
             itemId: session.event_item_id,
             name: session.name,
             session_id: session.id
-        })
+        }).then(() => handleClickAttend(session.id)).then(() => router.reload())
+
     }
 
     const handleClickAttend = async (sessionId: number) => {
