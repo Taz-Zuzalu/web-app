@@ -1,6 +1,7 @@
 import NextImage from "next/image"
 import NextLink from "next/link"
-import moment from "moment"
+// import moment from "moment"
+import moment from "moment-timezone"
 import ParticipateButton from "../ParticipateButton"
 import FavoriteButton from "../FavoriteButton"
 import { SessionsDTO, EventsDTO } from "../../types"
@@ -148,11 +149,16 @@ const Sessions = ({ event, sessions }: Props) => {
                                                             height={16}
                                                         />
                                                         <p className="text-[#708E8C] text-[18px]">
-                                                            {item.startDate &&
-                                                            moment(`${item.startDate}T00:00:00Z`).isValid()
-                                                                ? moment(
-                                                                      `${item.startDate}T${session.startTime}`
-                                                                  ).format("dddd, MMMM Do")
+                                                            {session.startDate &&
+                                                            moment(
+                                                                `${session.startDate}T${session.startTime}`
+                                                            ).isValid()
+                                                                ? moment
+                                                                      .tz(
+                                                                          `${session.startDate}T${session.startTime}`,
+                                                                          "Europe/Podgorica"
+                                                                      )
+                                                                      .format("dddd, MMMM Do h:mm A z")
                                                                 : "\u00A0"}
                                                         </p>
                                                     </div>
