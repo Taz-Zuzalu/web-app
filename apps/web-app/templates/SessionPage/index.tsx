@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import moment from "moment"
-import { SessionsDTO } from "../../types"
+import { EventsDTO, SessionsDTO } from "../../types"
 import BaseTemplate from "../Base"
 import DeleteSessionModal from "../../components/DeleteSessionModal"
 import EditSessionModal from "../../components/EditSessionModal"
@@ -77,14 +77,11 @@ const SessionPage = ({ session, sessions, userId }: Props) => {
         if (close) setOpenDeleteSessionModal(false)
     }
 
-
     return (
         <BaseTemplate>
             <div className="flex flex-col items-center bg-[#EEEEF0] h-full md:h-[100vh] px-4 md:px-[24px] py-4 md:py-[24px] gap-4 md:gap-[16px]">
                 <div className="flex flex-col md:flex-row justify-between p-5 bg-white w-full rounded-[16px]">
-
                     <div className="flex md:w-3/6 w-full items-center gap-2 mb-4 md:mb-0 text-[12px] md:text-[14px]">
-
                         <Link href={"/"}>
                             <a className={`text-[#1C292899]`}>Program</a>
                         </Link>
@@ -97,9 +94,8 @@ const SessionPage = ({ session, sessions, userId }: Props) => {
                     </div>
 
                     <div className="flex justify-end flex-col md:flex-row gap-[8px] items-center w-full">
-
                         <FavoriteButton session={session} isMiniButton={false} />
-                        <ParticipateButton session={session} isTallButton={true} />
+                        {/* <ParticipateButton event={event} session={session} isTallButton={true} /> */}
 
                         <button
                             className={`${

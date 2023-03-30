@@ -45,14 +45,16 @@ const ParticipateButton = ({ session, isTallButton }: Props) => {
     }
 
     const handleBuyTicket = async () => {
-        await axios.post("/api/pretix-create-order", {
-            subEventId: session.subevent_id,
-            slug: session.event_slug,
-            itemId: session.event_item_id,
-            name: session.name,
-            session_id: session.id
-        }).then(() => handleClickAttend(session.id)).then(() => router.reload())
-
+        await axios
+            .post("/api/pretix-create-order", {
+                subEventId: session.subevent_id,
+                slug: session.event_slug,
+                itemId: session.event_item_id,
+                name: session.name,
+                session_id: session.id
+            })
+            .then(() => handleClickAttend(session.id))
+            .then(() => router.reload())
     }
 
     const handleClickAttend = async (sessionId: number) => {
@@ -82,6 +84,7 @@ const ParticipateButton = ({ session, isTallButton }: Props) => {
     return (
         <>
             {userInfo &&
+                session.event_id !== 90 &&
                 (session.participants.length > 0 ? (
                     <button
                         className={`flex gap-2 md:w-auto w-full justify-center items-center bg-white border border-primary text-zulalu-primary font-[600] py-[${
