@@ -1,7 +1,6 @@
 import { useState } from "react"
 import NextImage from "next/image"
 import axios from "axios"
-import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import moment from "moment"
@@ -11,7 +10,6 @@ import DeleteSessionModal from "../../components/DeleteSessionModal"
 import EditSessionModal from "../../components/EditSessionModal"
 import ParticipateButton from "../../components/ParticipateButton"
 import FavoriteButton from "../../components/FavoriteButton"
-import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 
 type Props = {
     session: SessionsDTO
@@ -20,38 +18,10 @@ type Props = {
 }
 
 const SessionPage = ({ session, sessions, userId }: Props) => {
-    console.log("SESSION PAGE: ", session)
-    const { userInfo } = useUserAuthenticationContext()
     const router = useRouter()
     const { startDate, location, startTime } = session
     const [openDeleteSessionModal, setOpenDeleteSessionModal] = useState(false)
     const [openEditSessionModal, setOpenEditSessionModal] = useState(false)
-
-    const makeToast = (isSuccess: boolean, message: string) => {
-        if (isSuccess) {
-            toast.success(message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light"
-            })
-        } else {
-            toast.error(message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light"
-            })
-        }
-    }
 
     const deleteSession = async () => {
         await axios.post("/api/deleteSession", { id: session.id })
