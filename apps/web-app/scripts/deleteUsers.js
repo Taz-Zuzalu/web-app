@@ -1,6 +1,7 @@
-import { createClient } from "@supabase/supabase-js"
+const { createClient } = require("@supabase/supabase-js")
+
 const supabaseUrl = "https://polcxtixgqxfuvrqgthn.supabase.co"
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
+const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: {
         autoRefreshToken: false,
@@ -9,10 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
     }
 })
 
-(async function deleteUsers() {
-  const { data, error } = await supabase.auth.admin.deleteUser(
-    '72ba6b67-3715-4cab-96cf-dd031798e09a',
-    {shouldSoftDelete: true}
-  )
-  print(data, error)
+;(async () => {
+    const { data, error } = await supabase.auth.admin.deleteUser("f739cb24-205f-41fc-b5fc-a02a06cc1814", true)
+    console.log(data, error)
 })()
