@@ -11,6 +11,7 @@ import { EventsDTO, SessionsDTO } from "../../types"
 import BaseTemplate from "../Base"
 import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 import StyledDatePicker from "../../components/StyledDatePicker"
+import ContactModal from "../../components/ContactModal"
 
 type Props = {
     event: EventsDTO
@@ -28,6 +29,9 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
     const [locationsOptions, setLocationsOptions] = useState<string[]>([])
 
     const [openLocationFilter, setOpenLocationFilter] = useState(false)
+
+    const [openSpeakersModal, setOpenSpeakersModal] = useState(false)
+    const [openContactModal, setOpenContactModal] = useState(false)
 
     const isOrganizer = userRole === "resident"
 
@@ -194,14 +198,17 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                                 <p>APPLY NOW</p>
                             </div>
                         </a>
-                        <button className="w-full md:w-auto justify-center text-center bg-white border border-primary py-[8px] px-[5px] md:px-[15px] text-zulalu-primary font-[600] rounded-[8px] text-[12px] md:text-[16px]">
+                        <button
+                            className="w-full md:w-auto justify-center text-center bg-white border border-primary py-[8px] px-[5px] md:px-[15px] text-zulalu-primary font-[600] rounded-[8px] text-[12px] md:text-[16px]"
+                            onClick={() => setOpenContactModal(true)}
+                        >
                             CONTACT ORGANIZERS
                         </button>
                         <a href={event.publicUrl} target="_blank">
-                        <button className="w-full md:w-auto justify-center text-center flex gap-1 items-center bg-zulalu-primary text-white py-[8px] px-[5px] md:px-[15px] font-[600] rounded-[8px] text-[12px] md:text-[16px]">
-                            <NextImage src={"/ticket.svg"} width={13} height={12} />
-                            BUY TICKET
-                        </button>
+                            <button className="w-full md:w-auto justify-center text-center flex gap-1 items-center bg-zulalu-primary text-white py-[8px] px-[5px] md:px-[15px] font-[600] rounded-[8px] text-[12px] md:text-[16px]">
+                                <NextImage src={"/ticket.svg"} width={13} height={12} />
+                                BUY TICKET
+                            </button>
                         </a>
                     </div>
                 </div>
@@ -229,8 +236,9 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                         <div className="flex flex-col mt-10 gap-5">
                             <h1 className="text-black text-[24px]">Speakers</h1>
 
+                            {/* list of speakers */}
                             <div className="flex flex-wrap gap-[8px]">
-                                {speakers.map((speaker, idx) => (
+                                {speakers.slice(0, 12).map((speaker, idx) => (
                                     <div
                                         className="flex gap-2 bg-gray-200 text-[10px] justify-center items-center rounded-[4px] px-3 py-1"
                                         key={idx}
@@ -239,7 +247,48 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                                         <h1 className="capitalize">{speaker}</h1>
                                     </div>
                                 ))}
+                                {speakers.length > 12 && (
+                                    <button
+                                        className="bg-white border border-primary mt-4 text-zulalu-primary font-semibold py-2 px-4 rounded-lg hover:bg-primary hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                        onClick={() => setOpenSpeakersModal(true)}
+                                    >
+                                        More
+                                    </button>
+                                )}
                             </div>
+
+                            {/* modal with all speakers */}
+                            {openSpeakersModal && (
+                                <div
+                                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                                    onClick={() => setOpenSpeakersModal(false)}
+                                >
+                                    <div className="fixed inset-0 bg-black opacity-50"></div>
+                                    <div
+                                        className="bg-white p-6 w-full md:w-3/4 lg:w-1/2 xl:w-1/3 rounded-lg shadow-lg relative max-h-screen overflow-y-auto"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <h2 className="text-xl mb-4">Speakers</h2>
+                                        <div className="flex flex-wrap gap-[8px] max-h-[50vh] overflow-y-auto">
+                                            {speakers.map((speaker, idx) => (
+                                                <div
+                                                    className="flex gap-2 bg-gray-200 text-[10px] justify-center items-center rounded-[4px] px-3 py-1"
+                                                    key={idx}
+                                                >
+                                                    <img src="/user-icon-4.svg" className="w-[24px] h-[24px]" />
+                                                    <h1 className="capitalize">{speaker}</h1>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button
+                                            className="bg-white border border-primary mt-4 text-zulalu-primary font-semibold py-2 px-4 rounded-lg hover:bg-primary hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                            onClick={() => setOpenSpeakersModal(false)}
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -349,6 +398,7 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                         </div>
                     </div>
                     <Sessions event={event} sessions={filteredSessionsByLocation} />
+                    <ContactModal isOpen={openContactModal} closeModal={setOpenContactModal} />
                 </div>
             </div>
         </BaseTemplate>
