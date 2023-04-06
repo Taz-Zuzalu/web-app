@@ -37,6 +37,7 @@
         "react-dom": "^18.2.0",
         "react-draft-wysiwyg": "^1.15.0",
         "react-icons": "^4.4.0",
+        "react-query": "^3.39.3",
         "react-text-mask": "^5.5.0",
         "react-toastify": "^9.1.1",
         "ts-loader": "^9.4.2",
