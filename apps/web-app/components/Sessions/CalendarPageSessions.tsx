@@ -21,47 +21,6 @@ interface GroupedSession {
 }
 
 const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
-    // const [openBuyTicketModal, setOpenBuyTicketModal] = useState(false)
-    // const [currentSubEventParams, setCurrentSubEventParams] = useState<any>({
-    //     id: 0,
-    //     subEventId: 0,
-    //     eventSlug: "",
-    //     eventItemId: 0
-    // })
-
-    // const handleClickAttend = async (sessionId: number) => {
-    //     if (userInfo) {
-    //         await axios
-    //             .post("/api/addParticipant", {
-    //                 session_id: sessionId,
-    //                 user_id: userInfo.id
-    //             })
-    //             .then((res) => {
-    //                 if (res.data === "Participant added") {
-    //                     makeToast(true, "You are now attending this event.")
-    //                     router.push(router.asPath)
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err)
-    //                 makeToast(false, "Error")
-    //             })
-    //     }
-    // }
-
-    // const handleBuyTicket = async () => {
-    //     await axios.post("/api/pretix-create-order", {
-    //         subEventId: currentSubEventParams.subEventId,
-    //         slug: currentSubEventParams.eventSlug,
-    //         itemId: currentSubEventParams.eventItemId
-    //     })
-    //     handleClickAttend(currentSubEventParams.id)
-    // }
-
-    // const closeOpenTicketModal = (close = false) => {
-    //     if (close) setOpenBuyTicketModal(false)
-    // }
-
     const groupedByStartDate: GroupedSession[] = sessions.reduce((acc: GroupedSession[], session: SessionsDTO) => {
         const startDateStr: string = moment.utc(session.startDate).format("YYYY-MM-DD")
         const group: GroupedSession | undefined = acc.find((item: GroupedSession) => item.startDate === startDateStr)
@@ -84,25 +43,10 @@ const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
                     <div className="w-full flex-row" key={index}>
                         <div className="bg-[#1C2928] w-full flex flex-row items-center rounded-[8px]">
                             <p className="text-white py-[8px] font-[600] px-[16px] uppercase">
-                                {moment.utc(`${item.startDate}`).isValid()
-                                    ? moment.utc(`${item.startDate}`).format("MMMM Do")
+                                {moment.utc(`${startDate}`).isValid()
+                                    ? moment.utc(`${startDate}`).format("MMMM Do")
                                     : "\u00A0"}
                             </p>
-                            {/* {showStartDate ? (
-                                <p className="text-white py-[8px] px-[16px] uppercase">
-                                    {moment.utc(item.startDate).format("MMMM DD")}
-                                </p>
-                            ) : (
-                                <p className="text-white py-[8px] px-[16px]">
-                                    {item.startDate &&
-                                    item.startTime &&
-                                    moment.utc(`${item.startDate}T${item.startTime}`).isValid()
-                                        ? moment
-                                              .utc(`${item.startDate}T${item.startTime}`)
-                                              .format("h A [|] dddd, MMMM Do")
-                                        : "\u00A0"}
-                                </p>
-                            )} */}
                         </div>
                         <div className="flex flex-col gap-5">
                             {groupSessions.map((session, idx) => {
@@ -225,7 +169,11 @@ const CalendarPageSessions = ({ sessions, showStartDate = false }: Props) => {
                                                             width={15}
                                                             height={15}
                                                         />
-                                                        <p className="text-[18px]">{session.location === "Other" ? session.custom_location : session.location}</p>
+                                                        <p className="text-[18px]">
+                                                            {session.location === "Other"
+                                                                ? session.custom_location
+                                                                : session.location}
+                                                        </p>
                                                     </div>
                                                 </div>
 

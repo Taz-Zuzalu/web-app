@@ -46,8 +46,7 @@ export function UserAuthenticationProvider({ children }: UserAuthenticationProvi
             await api
                 .get(userId)
                 .then((res) => {
-                    console.log(res)
-                    setUserRole(session.user.user_metadata.role)
+                    setUserRole(res.data.role)
                     setUserInfo(res.data)
                 })
                 .catch((error) => {

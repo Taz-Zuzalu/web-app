@@ -27,7 +27,7 @@ const CalendarPage = ({ sessions, events }: Props) => {
     const [openContactModal, setOpenContactModal] = useState(false)
 
     const [openLocationFilter, setOpenLocationFilter] = useState(false)
-    const isOrganizer = userRole === "resident"
+    const isOrganizer = userRole === "organizer"
 
     /* Begin DatePicker code */
     const [openDatePicker, setOpenDatePicker] = useState(false)
@@ -187,7 +187,7 @@ const CalendarPage = ({ sessions, events }: Props) => {
                     </div>
                 </div>
 
-                {userInfo ? (
+                {userInfo && isOrganizer ? (
                     <>
                         <button
                             className="flex md:hidden w-full flex-row font-[600] justify-center items-center py-[8px] px-[16px] gap-[8px] bg-[#35655F] rounded-[8px] text-white text-[16px]"
@@ -230,7 +230,7 @@ const CalendarPage = ({ sessions, events }: Props) => {
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-[32px]">
                             <h1 className="text-[24px] md:text-[40px] text-[#37352F] font-[600]">Sessions</h1>
 
-                            {userInfo ? (
+                            {userInfo && isOrganizer ? (
                                 <>
                                     <button
                                         className="hidden md:flex flex-row font-[600] justify-center items-center py-[8px] px-[16px] gap-[8px] bg-[#35655F] rounded-[8px] text-white text-[16px]"
