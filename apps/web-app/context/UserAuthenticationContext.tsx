@@ -46,7 +46,7 @@ export function UserAuthenticationProvider({ children }: UserAuthenticationProvi
             await axios
                 .get(userId)
                 .then((res) => {
-                    setUserRole(session.user.user_metadata.role)
+                    setUserRole(res.data.role)
                     setUserInfo(res.data)
                 })
                 .catch((error) => {

@@ -8,10 +8,9 @@ import "react-toastify/dist/ReactToastify.css"
 import "react-autocomplete-input/dist/bundle.css"
 import "react-datepicker/dist/react-datepicker.css"
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 
-
-const MyApp = ({ Component, pageProps }) => (
+const MyApp = ({ Component, pageProps }: any) => (
     <UserAuthenticationProvider>
         <UserPassportContextProvider>
             <Component {...pageProps} />

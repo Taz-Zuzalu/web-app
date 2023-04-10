@@ -12,6 +12,7 @@ import MaskedInput from "react-text-mask"
 import { EditorProps } from "react-draft-wysiwyg"
 
 import { TracksDTO, FormatDTO, LevelDTO, LocationDTO, EventTypeDTO, SessionsDTO } from "../../types"
+import SlotsAvailableModal from "../SlotsAvailableModal"
 
 type NewSessionState = {
     description: string
@@ -54,7 +55,7 @@ const loadEditor: Loader<EditorProps> = async () => {
 const Editor = dynamic<EditorProps>(loadEditor, { ssr: false })
 
 const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
-    const { name, team_members, startDate, tags, startTime, duration } = newSession
+    const { name, team_members, startDate, tags, startTime, duration, location, event_id } = newSession
     const wraperRef = useRef(null)
     const [teamMember, setTeamMember] = useState({ name: "", role: "Speaker" })
     const [tag, setTag] = useState("")
@@ -66,6 +67,8 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
     const [levelsOpt, setLevelsOpt] = useState<LevelDTO[]>()
     const [locationsOpt, setLocationsOpt] = useState<LocationDTO[]>()
     const [eventTypesOpt, setEventTypesOpt] = useState<EventTypeDTO[]>()
+    const [openSlotsModal, setOpenSlotsModal] = useState(false)
+    const [filteredSessionsModal, setFilteredSessionsModal] = useState<SessionsDTO[]>([])
 
     const [richTextEditor, setRichTextEditor] = useState<EditorState>(EditorState.createEmpty())
 
@@ -248,8 +251,32 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
         setSteps(3)
     }
 
+    const handleOpenSlotsAvailable = () => {
+        const selectedLocation = newSession.location.toLocaleLowerCase()
+
+        const filteredSeshs = sessions
+            .filter((item) => item.location.toLocaleLowerCase() === selectedLocation)
+            .filter((item) => {
+                const formatDate = moment.utc(newSession.startDate).format("YYYY-MM-DD")
+
+                const selectedDate = moment.utc(formatDate)
+                const newSessionStartDate = moment.utc(item.startDate)
+
+                return selectedDate.isSame(newSessionStartDate)
+            })
+
+        setFilteredSessionsModal(filteredSeshs)
+    }
+
     return (
         <div className="flex flex-col w-full">
+            <SlotsAvailableModal
+                closeModal={setOpenSlotsModal}
+                isOpen={openSlotsModal}
+                sessions={filteredSessionsModal}
+                startDate={startDate}
+                location={location}
+            />
             <ToastContainer
                 position="top-center"
                 autoClose={3000}
@@ -292,7 +319,7 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                     )}
                 </div>
             </div>
-            {newSession.event_id !== 101 ? (
+            {event_id !== 101 && (
                 <div className="flex flex-col gap-1 w-full">
                     <label htmlFor="location" className="font-[600]">
                         Location*
@@ -312,11 +339,9 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                             ))}
                     </select>
                 </div>
-            ) : (
-                ""
             )}
 
-            {newSession.location === "Other" ? (
+            {location === "Other" ? (
                 <div className="flex flex-col gap-1 w-full mt-2">
                     <label htmlFor="custom_location" className="font-[600]">
                         Specify location
@@ -341,6 +366,20 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                     minDate={moment().toDate()}
                 />
             </div>
+
+            {startDate && location && location !== "Other" && event_id !== 101 && (
+                <div className="flex flex-col justify-start my-2">
+                    <button
+                        onClick={() => {
+                            handleOpenSlotsAvailable()
+                            setOpenSlotsModal(true)
+                        }}
+                        className="flex flex-row font-[600] w-full justify-center items-center py-[8px] px-[16px] gap-[8px] bg-[#35655F] rounded-[8px] text-white text-[16px]"
+                    >
+                        Check Unavailable Slots ({moment.utc(startDate).format("MM/DD/YYYY")})
+                    </button>
+                </div>
+            )}
 
             <div className="flex flex-row w-full gap-5 my-2">
                 <div className="flex flex-col w-3/6">
@@ -534,7 +573,7 @@ const Step2 = ({ newSession, setNewSession, setSteps, sessions }: Props) => {
                         ))}
                 </select>
             </div>
-            <div className="w-full flex flex-col md:flex-row gap-5 justify-center items-center mt-5">
+            <div className="w-full flex flex-col md:flex-row gap-5 justify-center items-center my-5">
                 <button
                     type="button"
                     className="w-full flex flex-row border-zulalu-primary border font-[600] justify-center items-center py-[8px] px-[16px] gap-[8px] bg-white rounded-[8px] text-black text-[16px]"

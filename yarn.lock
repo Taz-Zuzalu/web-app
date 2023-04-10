@@ -1849,17 +1849,17 @@ __metadata:
   linkType: hard
 
 "@pcd/passport-crypto@npm:*":
-  version: 0.0.3
-  resolution: "@pcd/passport-crypto@npm:0.0.3"
+  version: 0.1.0
+  resolution: "@pcd/passport-crypto@npm:0.1.0"
   dependencies:
     libsodium-wrappers: ^0.7.11
-  checksum: fc0de5ccf26e95d971dca928403fe2db176ea2672a2b9750e1c1bf30f46b60522565224f8985d161d18c4db3084559236b54caa1fd641392eec11c29f3ca509b
+  checksum: e48038f3ae3f0d63b22c0f9979502280011fa2a92c25d9f12f50fb832cbe367b94add89fa20221efe52ae709d2e0b888e0ff84b6d28624bd03aed53297339101
   languageName: node
   linkType: hard
 
-"@pcd/passport-interface@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@pcd/passport-interface@npm:0.0.8"
+"@pcd/passport-interface@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@pcd/passport-interface@npm:0.1.0"
   dependencies:
     "@pcd/passport-crypto": "*"
     "@pcd/pcd-types": "*"
@@ -1869,36 +1869,29 @@ __metadata:
     "@semaphore-protocol/identity": ^3.1.0
     "@semaphore-protocol/proof": ^3.1.0
     react: ^18.2.0
-  checksum: 776f95040e94e38cdc482eb55ad86215ba4d79283ff318ae0c1850a67e26412c92f6b8b5961e5a0a090bc866ea5c4d45790de9f179eaea57a6f44381e44d4563
+  checksum: d8538108c2e731dc202471f88bce3a17e1b066caca3ae207161aa3aa83f55d86f34d73b02cab09507c4d23ad675684c62a1033ba57b3ae003120f65a94df3f86
   languageName: node
   linkType: hard
 
-"@pcd/pcd-collection@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@pcd/pcd-collection@npm:0.0.8"
+"@pcd/pcd-collection@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@pcd/pcd-collection@npm:0.1.0"
   dependencies:
     "@pcd/pcd-types": "*"
-  checksum: 4a94ca7150ee850fec6704258b32b597254d7e12c780fe74e4cc6d9046078a6927af40f14a183cbff7e0d83d1243e1d071251b539396d0eb8c5bee3f626233b5
+  checksum: 2277bf7041522a542260da64e6a5434a83aaaf6d5964360dce02ff420b4e3c53f529607a832d5a4f2c642e80f31ea782d614c09ce5339d2efd7141d3f0c127f1
   languageName: node
   linkType: hard
 
-"@pcd/pcd-types@npm:*":
-  version: 0.0.9
-  resolution: "@pcd/pcd-types@npm:0.0.9"
-  checksum: b554fccdd3443a637ab79580f32691a0c363ea8d42a246cf03e75f25570a005cb02a228ea7dae88a632e2781516522c1cb39d3c3389cda2a70a24427292da2fc
-  languageName: node
-  linkType: hard
-
-"@pcd/pcd-types@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@pcd/pcd-types@npm:0.0.8"
-  checksum: 144c4fc56677098436f40b2c8ef5251c03fd0e2c33df1dc0dcaae13285f0c22a8292f22a18372c722e954a52faf0cc3480ec49d6bef765016ed273306c63c544
+"@pcd/pcd-types@npm:*, @pcd/pcd-types@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@pcd/pcd-types@npm:0.1.0"
+  checksum: 185eb918e31d9cb17363b791d88556a6581f0ce7b68c9cfe289076ebdde78646821691dd8de02a63a5b903a7112ec39541f832ae7cca8412dd398a1928315133
   languageName: node
   linkType: hard
 
 "@pcd/semaphore-group-pcd@npm:*":
-  version: 0.0.9
-  resolution: "@pcd/semaphore-group-pcd@npm:0.0.9"
+  version: 0.1.0
+  resolution: "@pcd/semaphore-group-pcd@npm:0.1.0"
   dependencies:
     "@pcd/pcd-types": "*"
     "@pcd/semaphore-identity-pcd": "*"
@@ -1907,13 +1900,13 @@ __metadata:
     "@semaphore-protocol/proof": ^3.1.0
     json-bigint: ^1.0.0
     uuid: ^9.0.0
-  checksum: f29b7f1834f14b6a9a175cb713b5c8862a5bb27205897a54b2eeb68d90f6a03a08640193052d704522422194bac019a6b0e49f08815cd468e6de03fefbec2414
+  checksum: 097388635a33d67dedf5eece2d0361bb33c07a075dfce5c698241ba824e9b65414c14721a87dabaf516e2a081bd7c92ae5b514aa6eff04cd43d47a9f2af19081
   languageName: node
   linkType: hard
 
 "@pcd/semaphore-identity-pcd@npm:*":
-  version: 0.0.10
-  resolution: "@pcd/semaphore-identity-pcd@npm:0.0.10"
+  version: 0.1.0
+  resolution: "@pcd/semaphore-identity-pcd@npm:0.1.0"
   dependencies:
     "@pcd/pcd-types": "*"
     "@semaphore-protocol/group": ^3.1.0
@@ -1921,13 +1914,13 @@ __metadata:
     "@semaphore-protocol/proof": ^3.1.0
     json-bigint: ^1.0.0
     uuid: ^9.0.0
-  checksum: abe4090a144d2fe0bb5e3ed7d136880f0b97debcb34bc7c1e1b8ac07a4d00de60b7c9e7e42ef448badb91f87a9d9c3a05fd4c7402d8babf73c94d78eacc512d0
+  checksum: 405a900897c749c2f54706ea6139f11b6ca68674e65182af71da00d19d3e0d5f4846009b1992b0886fd8645e7c904297d993a6fe25ef8f238a45d234173bb6b1
   languageName: node
   linkType: hard
 
 "@pcd/semaphore-signature-pcd@npm:*":
-  version: 0.0.5
-  resolution: "@pcd/semaphore-signature-pcd@npm:0.0.5"
+  version: 0.1.0
+  resolution: "@pcd/semaphore-signature-pcd@npm:0.1.0"
   dependencies:
     "@pcd/pcd-types": "*"
     "@semaphore-protocol/group": ^3.1.0
@@ -1935,7 +1928,7 @@ __metadata:
     "@semaphore-protocol/proof": ^3.1.0
     js-sha256: ^0.9.0
     json-bigint: ^1.0.0
-  checksum: 11b0163e796b464aab36500d3077ae81c0d43f10899c0e717eb084aba34c72685ece8ca91ad0854692f7ddf71ce8a7146fd537926b33117ec73ce006488edc3d
+  checksum: a665b9c827ac8bd6be3f0e0153ae4acc0ebb6b084577274e7f417138b3e20d692a235c7292ee0a20662bd00e0216fefe9ad5f21b5c4b5942b6fcea430a1c4456
   languageName: node
   linkType: hard
 
@@ -2116,11 +2109,11 @@ __metadata:
   linkType: hard
 
 "@supabase/gotrue-js@npm:^2.18.1":
-  version: 2.18.1
-  resolution: "@supabase/gotrue-js@npm:2.18.1"
+  version: 2.20.0
+  resolution: "@supabase/gotrue-js@npm:2.20.0"
   dependencies:
     cross-fetch: ^3.1.5
-  checksum: c02e333b778f477cc652472c662c01ce09296743b863b10a8a850cfdbeaa4d240d400ede049ff880dc55e7823e124f2ef860f3be60e5c4aadc4b0332ee5bca12
+  checksum: 2a3c6e7f98b804bc7551f0d35ac4bdb08acae6426b9da4f27bb2e7bccf47f49c936106222f1a29d60133c6645a2fffb718225599ff2b177277a6eadac6f4b686
   languageName: node
   linkType: hard
 
@@ -3712,9 +3705,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.349
-  resolution: "electron-to-chromium@npm:1.4.349"
-  checksum: 315f1338b40dac035e4656e16adf6ccfe67d1325b5b14df8c1c187951bd89346317ce49539c42e86459b6454a64af2b9d6baa1e181fe4a65bea6c7ae32a9d7c1
+  version: 1.4.352
+  resolution: "electron-to-chromium@npm:1.4.352"
+  checksum: 225a7494040015372a27f83e2e06e8d13895a8bb7901c44cce029162fb678b51c0864268228ef5d4705d17b78940a1329798295e2070c569fdf97fe1ad85f457
   languageName: node
   linkType: hard
 
@@ -6552,8 +6545,8 @@ __metadata:
   linkType: hard
 
 "react-calendar@npm:^4.0.0":
-  version: 4.1.1
-  resolution: "react-calendar@npm:4.1.1"
+  version: 4.2.1
+  resolution: "react-calendar@npm:4.2.1"
   dependencies:
     "@types/react": "*"
     "@wojtekmaj/date-utils": ^1.1.3
@@ -6563,7 +6556,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: f9f6fac2aa0345a069d10a76addf13816a0648815ecd7e83c31b522726e0484537a6f194ad25ce33481cc57955f34076d12f87852a64153eff246a601fed044c
+  checksum: a14ce00249b867d44ace3c1766f2af41347883c5e594fa10aeeb0eaf4034da9b9a2434df0b666ff736efa7d25c029b65a4008482df9b61a4b7f81e1751a1da27
   languageName: node
   linkType: hard
 
@@ -8010,9 +8003,9 @@ __metadata:
   dependencies:
     "@headlessui/react": ^1.7.2
     "@material-tailwind/react": ^1.4.2
-    "@pcd/passport-interface": 0.0.8
-    "@pcd/pcd-collection": 0.0.8
-    "@pcd/pcd-types": 0.0.8
+    "@pcd/passport-interface": 0.1.0
+    "@pcd/pcd-collection": 0.1.0
+    "@pcd/pcd-types": 0.1.0
     "@react-google-maps/api": ^2.18.1
     "@supabase/auth-helpers-nextjs": ^0.5.6
     "@supabase/supabase-js": ^2.10.0

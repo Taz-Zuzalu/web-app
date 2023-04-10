@@ -101,14 +101,18 @@ const MyProfilePage = ({ events, sessions }: Props) => {
                             </div>
                             {profile ? (
                                 <>
-                                    <div className="flex w-auto gap-2 px-2 py-1 items-center">
-                                        <NextImage src={"/pin-map.svg"} alt="location" width={16} height={16} />
-                                        <p className="text-[16px] font-[600]">{profile?.location}</p>
-                                    </div>
-                                    <div className="flex w-auto gap-2 px-2 py-1 text-[16px] items-center">
-                                        <NextImage src={"/briefcase.svg"} alt="location" width={24} height={24} />
-                                        <p className="text-[16px] font-[600]">{profile?.company}</p>
-                                    </div>
+                                    {profile.location && (
+                                        <div className="flex w-auto gap-2 px-2 py-1 items-center">
+                                            <NextImage src={"/pin-map.svg"} alt="location" width={16} height={16} />
+                                            <p className="text-[16px] font-[600]">{profile.location}</p>
+                                        </div>
+                                    )}
+                                    {profile.company && (
+                                        <div className="flex w-auto gap-2 px-2 py-1 text-[16px] items-center">
+                                            <NextImage src={"/briefcase.svg"} alt="location" width={24} height={24} />
+                                            <p className="text-[16px] font-[600]">{profile.company}</p>
+                                        </div>
+                                    )}
                                 </>
                             ) : (
                                 ""
@@ -133,6 +137,7 @@ const MyProfilePage = ({ events, sessions }: Props) => {
                     </div>
                 </div> */}
 
+                {/* mobile version */}
                 {profile ? (
                     <div className="flex md:hidden flex-col items-start gap-[8px] bg-white w-full rounded-[16px]">
                         <div className="flex flex-col items-start pt-[16px] px-[16px] pb-[24px] gap-[24px] w-full">
@@ -148,24 +153,33 @@ const MyProfilePage = ({ events, sessions }: Props) => {
                                         <NextImage src={"/vector-pencil.svg"} alt="pencil" height={24} width={24} />
                                     </button>
                                 </div>
-                                <div className="flex flex-row items-center gap-[8px] w-full">
-                                    <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px]">
-                                        <NextImage src={"/pin-map.svg"} alt="mappin" width={16} height={16} />
+                                {profile.location && (
+                                    <div className="flex flex-row items-center gap-[8px] w-full">
+                                        <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px]">
+                                            <NextImage src={"/pin-map.svg"} alt="mappin" width={16} height={16} />
+                                        </div>
+                                        <p className="font-[600] text-[16px] text-[#1C2928]">{profile?.location}</p>
                                     </div>
-                                    <p className="font-[600] text-[16px] text-[#1C2928]">{profile?.location}</p>
-                                </div>
-                                <div className="flex flex-row items-center gap-[8px]">
-                                    <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px]">
-                                        <NextImage src={"/briefcase.svg"} alt="mappin" width={16} height={16} />
+                                )}
+                                {profile?.company && (
+                                    <div className="flex flex-row items-center gap-[8px]">
+                                        <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px]">
+                                            <NextImage src={"/briefcase.svg"} alt="mappin" width={16} height={16} />
+                                        </div>
+                                        <p className="font-[600] text-[16px] text-[#1C2928]">{profile?.company}</p>
                                     </div>
-                                    <p className="font-[600] text-[16px] text-[#1C2928]">{profile?.company}</p>
-                                </div>
-                                <div className="flex flex-row items-start gap-[8px]">
-                                    <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px] w-[24px] h-[24px]">
-                                        <NextImage src={"/info.svg"} alt="info" width={16} height={16} />
+                                )}
+
+                                {profile?.bio && (
+                                    <div className="flex flex-row items-start gap-[8px]">
+                                        <div className="flex flex-row items-start py-[8px] px-[4px] gap-[8px] w-[24px] h-[24px]">
+                                            <NextImage src={"/info.svg"} alt="info" width={16} height={16} />
+                                        </div>
+                                        <p className="font-[400] text-[16px] text-[#1C2928] w-[310px]">
+                                            {profile?.bio}
+                                        </p>
                                     </div>
-                                    <p className="font-[400] text-[16px] text-[#1C2928] w-[310px]">{profile?.bio}</p>
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>

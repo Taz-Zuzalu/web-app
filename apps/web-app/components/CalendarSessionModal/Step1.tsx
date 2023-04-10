@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+import { useEffect, useState } from "react"
 import { EventsDTO } from "../../types"
 
 type NewSessionState = {
@@ -45,12 +46,24 @@ const Step1 = ({ events, setSteps, newSession, setNewSession }: Props) => {
         } else {
             setNewSession({
                 ...newSession,
+                location: "",
                 event_id: selectedEvent.id,
                 event_slug: selectedEvent.slug,
                 event_item_id: selectedEvent.item_id
             })
         }
     }
+
+    useEffect(() => {
+        const selectedEvent = events[0]
+        setNewSession({
+            ...newSession,
+            location: "",
+            event_id: selectedEvent.id,
+            event_slug: selectedEvent.slug,
+            event_item_id: selectedEvent.item_id
+        })
+    }, [])
 
     return (
         <div className="flex flex-col w-full items-center justify-center h-[80%]">

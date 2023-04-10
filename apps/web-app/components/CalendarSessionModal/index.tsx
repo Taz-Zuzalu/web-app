@@ -1,5 +1,3 @@
-import "react-autocomplete-input/dist/bundle.css"
-import "react-datepicker/dist/react-datepicker.css"
 import { Dialog, Transition } from "@headlessui/react"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"

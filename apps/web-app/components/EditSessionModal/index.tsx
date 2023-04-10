@@ -212,6 +212,7 @@ const EditSessionModal = ({ isOpen, closeModal, session, sessions, reRender, set
                                             setNewSession={setNewSession}
                                             setSteps={setSteps}
                                             sessions={sessions}
+                                            sessionId={session.id}
                                         />
                                     )}
 
