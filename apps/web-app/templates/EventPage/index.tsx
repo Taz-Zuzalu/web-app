@@ -11,6 +11,7 @@ import { EventsDTO, SessionsDTO } from "../../types"
 import BaseTemplate from "../Base"
 import { useUserAuthenticationContext } from "../../context/UserAuthenticationContext"
 import StyledDatePicker from "../../components/StyledDatePicker"
+import { toSvg } from "jdenticon"
 
 type Props = {
     event: EventsDTO
@@ -31,7 +32,6 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
 
     // const isOrganizer = userRole === "organizer"
     const isOrganizer = true
-
 
     /* Begin DatePicker code */
     const [openDatePicker, setOpenDatePicker] = useState(false)
@@ -169,6 +169,11 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
         setFilteredSessions(filtered)
     }
 
+    const generateIdenticon = (value: string, size: number) => {
+        const svgString = toSvg(value, size)
+        return <div dangerouslySetInnerHTML={{ __html: svgString }} />
+    }
+
     return (
         <BaseTemplate>
             <div className="flex flex-col p-5 bg-[#EEEEF0] gap-5 w-full h-full">
@@ -181,24 +186,23 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                         <h1 className={`text-black font-[600]`}>{`${event.name}`}</h1>
                     </div>
                     <div className="flex flex-col w-auto md:flex-row gap-4 md:gap-[8px] justify-end items-start md:items-center">
-
                         {event.apply_form !== "https://zuzalu.city/events" && (
                             <a
-                            className="w-full md:w-auto"
-                            href={
-                                event.id === 90
-                                    ? "https://lu.ma/bpvpaljo"
-                                    : event.id === 92
-                                    ? "https://airtable.com/shrABLqfWSmhm39z3"
-                                    : event.apply_form
-                            }
-                            target="_blank"
-                        >
-                            <div className="w-full md:w-auto justify-center text-center md:w-auto bg-white border border-primary py-[8px] px-[5px] md:px-[15px] text-zulalu-primary font-[600] rounded-[8px] text-[12px] md:text-[16px]">
-                                <p>APPLY NOW</p>
-                            </div>
-                        </a>
-                            )}
+                                className="w-full md:w-auto"
+                                href={
+                                    event.id === 90
+                                        ? "https://lu.ma/bpvpaljo"
+                                        : event.id === 92
+                                        ? "https://airtable.com/shrABLqfWSmhm39z3"
+                                        : event.apply_form
+                                }
+                                target="_blank"
+                            >
+                                <div className="w-full md:w-auto justify-center text-center md:w-auto bg-white border border-primary py-[8px] px-[5px] md:px-[15px] text-zulalu-primary font-[600] rounded-[8px] text-[12px] md:text-[16px]">
+                                    <p>APPLY NOW</p>
+                                </div>
+                            </a>
+                        )}
                         <button className="w-full md:w-auto justify-center text-center bg-white border border-primary py-[8px] px-[5px] md:px-[15px] text-zulalu-primary font-[600] rounded-[8px] text-[12px] md:text-[16px]">
                             CONTACT ORGANIZERS
                         </button>
@@ -240,7 +244,7 @@ const EventPage = ({ event, sessions, allSessions }: Props) => {
                                         className="flex gap-2 bg-gray-200 text-[10px] justify-center items-center rounded-[4px] px-3 py-1"
                                         key={idx}
                                     >
-                                        <img src="/user-icon-4.svg" className="w-[24px] h-[24px]" />
+                                        {generateIdenticon(speaker, 24)}
                                         <h1 className="capitalize">{speaker}</h1>
                                     </div>
                                 ))}
