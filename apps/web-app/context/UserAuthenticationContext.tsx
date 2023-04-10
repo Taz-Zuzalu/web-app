@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useState, useContext, useEffect, useMemo } from "react"
-
+import axios from "axios"
+import { Session, User, UserResponse } from "@supabase/supabase-js"
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { SessionsDTO, UserDTO } from "../types"
-import { api } from "../hooks/apiClient"
 
 type UserAuthenticationContextData = {
     userInfo: UserDTO | undefined
@@ -43,7 +43,7 @@ export function UserAuthenticationProvider({ children }: UserAuthenticationProvi
         if (session.user.id) {
             const userId = `${window.location.origin}/api/fetchUser/${session.user.id!}/`
 
-            await api
+            await axios
                 .get(userId)
                 .then((res) => {
                     setUserRole(res.data.role)
@@ -60,7 +60,7 @@ export function UserAuthenticationProvider({ children }: UserAuthenticationProvi
 
     const fetchEvents = async () => {
         if (userInfo) {
-            await api
+            await axios
                 .get(`/api/fetchSessionsByUserId/${userInfo.id}`)
                 .then((res) => {
                     const sessionsParticipanting = res.data.filter((item: any) => item.participants.length > 0)
