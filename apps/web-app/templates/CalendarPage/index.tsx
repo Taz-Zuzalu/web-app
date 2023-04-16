@@ -30,7 +30,6 @@ const CalendarPage = ({ sessions, events }: Props) => {
     // const isOrganizer = userRole === "organizer"
     const isOrganizer = true
 
-
     /* Begin DatePicker code */
     const [openDatePicker, setOpenDatePicker] = useState(false)
     const [datePickerDescription, setDatePickerDescription] = useState("FULL PROGRAM")
